@@ -3,3 +3,5 @@
 /maps/dist
 /sort/build
 /sort/node_modules
+/reactiveness/.cache
+/reactiveness/dist
