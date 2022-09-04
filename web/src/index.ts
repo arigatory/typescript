@@ -1,16 +1,20 @@
-import { UserEdit } from './views/UserEdit';
-import { User} from './models/User';
+import { UserList } from './views/UserList';
+import { Collection } from './models/Collection';
+import { User, UserProps } from './models/User';
 
+const users = new Collection(
+  'http://localhost:3000/users',
+  (json: UserProps) => {
+    return User.buildUser(json);
+  }
+);
 
-const user = User.buildUser({ name: 'Ivan', age: 36 });
+users.on('change', () => {
+  const root = document.getElementById('root');
 
-const root = document.getElementById('root');
+  if (root) {
+    new UserList(root, users).render();
+  }
+});
 
-if (root) {
-  const userEdit = new UserEdit(root, user);
-
-  userEdit.render();
-  console.log(userEdit);
-} else {
-  throw new Error('No root!');
-}
+users.fetch();
