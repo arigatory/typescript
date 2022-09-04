@@ -9,18 +9,17 @@ export class UserForm extends View<User, UserProps> {
     };
   }
 
-  onSaveClick = ():void => {
+  onSaveClick = (): void => {
     this.model.save();
   };
 
   onSetNameClick = (): void => {
-    if (this.parent === null)
-      return;
+    if (this.parent === null) return;
     const input = this.parent.querySelector('input');
 
     if (input) {
       const name = input.value;
-      this.model.set({name});
+      this.model.set({ name });
     }
   };
 

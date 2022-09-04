@@ -1,4 +1,4 @@
-import { AxiosPromise, AxiosResponse } from "axios";
+import { AxiosPromise, AxiosResponse } from 'axios';
 
 interface ModelAttributes<T> {
   set(value: T): void;
@@ -12,7 +12,7 @@ interface Sync<T> {
 }
 
 interface Events {
-  on(eventName: string, callback: ()=>void): void;
+  on(eventName: string, callback: () => void): void;
   trigger(eventName: string): void;
 }
 
@@ -25,7 +25,7 @@ export class Model<T extends HasId> {
     private attributes: ModelAttributes<T>,
     private events: Events,
     private sync: Sync<T>
-  ) { }
+  ) {}
 
   on = this.events.on;
   trigger = this.events.trigger;
@@ -36,10 +36,10 @@ export class Model<T extends HasId> {
     this.events.trigger('change');
   }
 
-  fetch() : void {
+  fetch(): void {
     const id = this.get('id');
     if (typeof id != 'number') {
-      throw new Error("Cannot fetch without an id");
+      throw new Error('Cannot fetch without an id');
     }
     this.sync.fetch(id).then((response: AxiosResponse): void => {
       this.set(response.data);
@@ -47,11 +47,12 @@ export class Model<T extends HasId> {
   }
 
   save(): void {
-    this.sync.save(this.attributes.getAll())
+    this.sync
+      .save(this.attributes.getAll())
       .then((response: AxiosResponse): void => {
         this.trigger('save');
       })
-      .catch(()=>{
+      .catch(() => {
         this.trigger('error');
       });
   }
