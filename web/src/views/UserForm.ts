@@ -1,0 +1,21 @@
+export class UserForm {
+  constructor(public parent: Element | null) {}
+
+  template(): string {
+    return `
+      <div>
+        <h1>User Form</h1>
+        <input />
+        <button>Click me</button>
+      </div>
+    `;
+  }
+
+  render(): void {
+    const templateElement = document.createElement('template');
+    templateElement.innerHTML = this.template();
+
+    if (this.parent)
+      this.parent.append(templateElement.content);
+  }
+}
